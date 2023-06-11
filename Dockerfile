@@ -13,7 +13,6 @@ COPY requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
 
-
 FROM python:3.11-slim
 
 ENV DEBIAN_FRONTEND noninteractive
