@@ -104,6 +104,7 @@ def on_message_cmd(mqtt_client, data_object, msg):
                 gain = [0, 0]
 
             filename = f"{uuid.uuid4()}"
+            logger.debug(f"Filename: {filename}")
             if data['cmd'].lower() == "sound":
                 if not isfile(os.path.join(config[CONF_AUDIO_SOUNDS_PATH], f'{data["data"]}.wav')):
                     logger.warning("File does not exist")
@@ -132,9 +133,15 @@ def tts_worker(filename, text):
     tts = gTTS(text, lang=config[CONF_TTS_LANG], tld=config[CONF_TTS_TLD], slow=config[CONF_TTS_SLOW])
     tts.save(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.mp3'))
 
-    AudioSegment.from_mp3(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.mp3')).export(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav'), format="wav")
+    sound = AudioSegment.from_mp3(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.mp3'))
+    sound = sound.set_frame_rate(44100)
+    sound.export(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav'), format="wav")
 
-    os.remove(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.mp3'))
+    if not config[CONF_AUDIO_KEEP_FILE]:
+        logger.debug("Deleting tts mp3 file")
+        os.remove(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.mp3'))
+
+    logger.debug("Requesting TTS from Google completed")
 
 
 def audio_worker():
@@ -198,6 +205,11 @@ def audio_worker():
                 logger.critical("Unknown command")
         except queue.Empty:
             time.sleep(1)
+        except KeyboardInterrupt as e:
+            signalhandler("KeyboardInterrupt")
+            raise e
+        except BaseException:
+            logger.exception("Exception in audio thread")
 
 
 def create_mqtt_client():
