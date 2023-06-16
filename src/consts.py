@@ -4,7 +4,7 @@ from voluptuous import Any
 
 """Constants common the various modules."""
 AUTHOR = "TobsA"
-VERSION = "0.1.0"
+VERSION = "1.1.0"
 
 CONF_CONFIG = "config"
 CONF_CONFIG_EXAMPLE = "config_example"

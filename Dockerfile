@@ -15,6 +15,8 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.t
 
 FROM python:3.11-slim
 
+LABEL VERSION="1.1.0"
+
 ENV DEBIAN_FRONTEND noninteractive
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
