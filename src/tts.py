@@ -223,6 +223,9 @@ def create_mqtt_client():
             "connected": connected
         },
     )
+    if config[CONF_MQTT_TLS]:
+        mqttc.tls_set()
+
     mqttc.will_set(
         MQTT_STATUS.format(config[CONF_MQTT_BASE_TOPIC]), MQTT_NOT_AVAILABLE, retain=True
     )

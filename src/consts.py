@@ -4,7 +4,7 @@ from voluptuous import Any
 
 """Constants common the various modules."""
 AUTHOR = "TobsA"
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 
 CONF_CONFIG = "config"
 CONF_CONFIG_EXAMPLE = "config_example"
@@ -14,6 +14,7 @@ CONF_MQTT_USERNAME = "mqtt_username"
 CONF_MQTT_PASSWORD = "mqtt_password"
 CONF_MQTT_BASE_TOPIC = "mqtt_base_topic"
 CONF_MQTT_HEARTBEAT = "mqtt_heartbeat"
+CONF_MQTT_TLS = "mqtt_tls"
 CONF_AUDIO_DISABLE = "audio_disable"
 CONF_AUDIO_DEVICE = "audio_device"
 CONF_AUDIO_SOUNDS_PATH = "audio_sounds_path"
@@ -32,6 +33,7 @@ DEFAULT_MQTT_USERNAME = ""
 DEFAULT_MQTT_PASSWORD = ""
 DEFAULT_MQTT_BASE_TOPIC = "tts"
 DEFAULT_MQTT_HEARTBEAT = True
+DEFAULT_MQTT_TLS = False
 DEFAULT_AUDIO_DISABLE = False
 DEFAULT_AUDIO_DEVICE = None
 DEFAULT_AUDIO_SOUNDS_PATH = "/app/sounds"
@@ -66,6 +68,7 @@ CONF_SCHEMA = vol.Schema(
         vol.Optional(CONF_MQTT_PASSWORD, default=DEFAULT_MQTT_PASSWORD): str,
         vol.Optional(CONF_MQTT_BASE_TOPIC, default=DEFAULT_MQTT_BASE_TOPIC): str,
         vol.Optional(CONF_MQTT_HEARTBEAT, default=DEFAULT_MQTT_HEARTBEAT): bool,
+        vol.Optional(CONF_MQTT_TLS, default=DEFAULT_MQTT_TLS): bool,
 
         vol.Required(CONF_AUDIO_DISABLE, default=DEFAULT_AUDIO_DISABLE): bool,
         vol.Required(CONF_AUDIO_DEVICE, default=DEFAULT_AUDIO_DEVICE): Any(None, str),
