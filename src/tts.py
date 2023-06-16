@@ -78,10 +78,10 @@ def on_message_cmd(mqtt_client, data_object, msg):
             stopCurrent.set()
 
         elif data['cmd'].lower() == "sleep":
-            if "data" not in data or not data['data'].isnummeric():
+            if "data" not in data or not str(data['data']).isnumeric():
                 logger.warning("Error decoding data")
                 return
-            audioQueue.put(("sleep", data['data'], [0, 0]), False)
+            audioQueue.put(("sleep", data['data'], None), False)
 
         elif data['cmd'].lower() in ["sound", "tts"]:
             if "data" not in data:
