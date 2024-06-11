@@ -24,7 +24,7 @@ WORKDIR /app
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
         pulseaudio \
-        mpg123 \
+        sox \
         ffmpeg && \
     apt-get clean
 
