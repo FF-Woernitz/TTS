@@ -4,7 +4,7 @@ from voluptuous import Any
 
 """Constants common the various modules."""
 AUTHOR = "TobsA"
-VERSION = "1.1.2"
+VERSION = "2.0.0"
 
 CONF_CONFIG = "config"
 CONF_CONFIG_EXAMPLE = "config_example"
@@ -38,8 +38,8 @@ DEFAULT_MQTT_TLS = False
 DEFAULT_AUDIO_DISABLE = False
 DEFAULT_AUDIO_PLUGIN = "pulse"
 DEFAULT_AUDIO_DEVICE = None
-DEFAULT_AUDIO_SOUNDS_PATH = r"C:\Users\TobsA\GIT\ffw_tts\sounds"
-DEFAULT_AUDIO_TEMP_PATH = r"C:\Users\TobsA\GIT\ffw_tts\tmp"
+DEFAULT_AUDIO_SOUNDS_PATH = r"sounds"
+DEFAULT_AUDIO_TEMP_PATH = r"tmp"
 DEFAULT_AUDIO_KEEP_FILE = False
 DEFAULT_TTS_LANG = "de"
 DEFAULT_TTS_TLD = "de"
