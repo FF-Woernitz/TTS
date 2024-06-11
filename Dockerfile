@@ -33,6 +33,8 @@ COPY --from=builder /app/requirements.txt .
 
 RUN pip install --no-cache /wheels/*
 
+RUN mkdir -p /app/tmp
+
 COPY . .
 
 CMD ["python","-u", "run.py"]

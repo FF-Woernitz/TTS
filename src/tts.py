@@ -136,7 +136,7 @@ def tts_worker(filename, text):
     tts.save(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.mp3'))
 
     sound = AudioSegment.from_mp3(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.mp3'))
-    sound = sound.set_frame_rate(44100)
+    sound = sound.set_frame_rate(48000)
     sound.export(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav'), format="wav")
 
     if not config[CONF_AUDIO_KEEP_FILE]:
