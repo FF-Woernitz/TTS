@@ -187,7 +187,7 @@ def audio_worker():
                         args.extend(['-o', config[CONF_AUDIO_PLUGIN]])
                     if config[CONF_AUDIO_DEVICE] is not None:
                         args.extend(['-a', config[CONF_AUDIO_DEVICE]])
-                    args.insert(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav'))
+                    args.append(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav'))
                     p = Popen(args)
                     while p.poll():
                         if stopProgram.is_set() or stopCurrent.is_set():
