@@ -16,6 +16,7 @@ CONF_MQTT_BASE_TOPIC = "mqtt_base_topic"
 CONF_MQTT_HEARTBEAT = "mqtt_heartbeat"
 CONF_MQTT_TLS = "mqtt_tls"
 CONF_AUDIO_DISABLE = "audio_disable"
+CONF_AUDIO_PLUGIN = "audio_plugin"
 CONF_AUDIO_DEVICE = "audio_device"
 CONF_AUDIO_SOUNDS_PATH = "audio_sounds_path"
 CONF_AUDIO_TEMP_PATH = "audio_temp_path"
@@ -35,9 +36,10 @@ DEFAULT_MQTT_BASE_TOPIC = "tts"
 DEFAULT_MQTT_HEARTBEAT = True
 DEFAULT_MQTT_TLS = False
 DEFAULT_AUDIO_DISABLE = False
+DEFAULT_AUDIO_PLUGIN = "pulse"
 DEFAULT_AUDIO_DEVICE = None
-DEFAULT_AUDIO_SOUNDS_PATH = "/app/sounds"
-DEFAULT_AUDIO_TEMP_PATH = "/tmp"
+DEFAULT_AUDIO_SOUNDS_PATH = r"C:\Users\TobsA\GIT\ffw_tts\sounds"
+DEFAULT_AUDIO_TEMP_PATH = r"C:\Users\TobsA\GIT\ffw_tts\tmp"
 DEFAULT_AUDIO_KEEP_FILE = False
 DEFAULT_TTS_LANG = "de"
 DEFAULT_TTS_TLD = "de"
@@ -60,7 +62,7 @@ LOG_FORMAT = "%(asctime)s %(levelname)s: %(message)s{}".format(RESET_COLOR)
 
 CONF_SCHEMA = vol.Schema(
     {
-        vol.Required(CONF_MQTT_SERVER, default=DEFAULT_MQTT_SERVER): str,
+        vol.Optional(CONF_MQTT_SERVER, default=DEFAULT_MQTT_SERVER): str,
         vol.Optional(CONF_MQTT_PORT, default=DEFAULT_MQTT_PORT): vol.All(
             vol.Coerce(int), vol.Range(min=1, max=65535)
         ),
@@ -70,11 +72,12 @@ CONF_SCHEMA = vol.Schema(
         vol.Optional(CONF_MQTT_HEARTBEAT, default=DEFAULT_MQTT_HEARTBEAT): bool,
         vol.Optional(CONF_MQTT_TLS, default=DEFAULT_MQTT_TLS): bool,
 
-        vol.Required(CONF_AUDIO_DISABLE, default=DEFAULT_AUDIO_DISABLE): bool,
-        vol.Required(CONF_AUDIO_DEVICE, default=DEFAULT_AUDIO_DEVICE): Any(None, str),
-        vol.Required(CONF_AUDIO_SOUNDS_PATH, default=DEFAULT_AUDIO_SOUNDS_PATH): str,
-        vol.Required(CONF_AUDIO_TEMP_PATH, default=DEFAULT_AUDIO_TEMP_PATH): str,
-        vol.Required(CONF_AUDIO_KEEP_FILE, default=DEFAULT_AUDIO_KEEP_FILE): bool,
+        vol.Optional(CONF_AUDIO_DISABLE, default=DEFAULT_AUDIO_DISABLE): bool,
+        vol.Optional(CONF_AUDIO_PLUGIN, default=DEFAULT_AUDIO_PLUGIN): Any(None, str),
+        vol.Optional(CONF_AUDIO_DEVICE, default=DEFAULT_AUDIO_DEVICE): Any(None, str),
+        vol.Optional(CONF_AUDIO_SOUNDS_PATH, default=DEFAULT_AUDIO_SOUNDS_PATH): str,
+        vol.Optional(CONF_AUDIO_TEMP_PATH, default=DEFAULT_AUDIO_TEMP_PATH): str,
+        vol.Optional(CONF_AUDIO_KEEP_FILE, default=DEFAULT_AUDIO_KEEP_FILE): bool,
 
         vol.Optional(CONF_TTS_LANG, default=DEFAULT_TTS_LANG): str,
         vol.Optional(CONF_TTS_TLD, default=DEFAULT_TTS_TLD): str,
