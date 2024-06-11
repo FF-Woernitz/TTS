@@ -24,8 +24,6 @@ WORKDIR /app
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends \
         pulseaudio \
-        pulseaudio-utils \
-        libsndfile1-dev \
         ffmpeg && \
     apt-get clean
 
