@@ -71,7 +71,6 @@ CONF_SCHEMA = vol.Schema(
         vol.Optional(CONF_MQTT_TLS, default=DEFAULT_MQTT_TLS): bool,
 
         vol.Optional(CONF_AUDIO_DISABLE, default=DEFAULT_AUDIO_DISABLE): bool,
-        vol.Optional(CONF_AUDIO_PLUGIN, default=DEFAULT_AUDIO_PLUGIN): Any(None, str),
         vol.Optional(CONF_AUDIO_DEVICE, default=DEFAULT_AUDIO_DEVICE): Any(None, str),
         vol.Optional(CONF_AUDIO_SOUNDS_PATH, default=DEFAULT_AUDIO_SOUNDS_PATH): str,
         vol.Optional(CONF_AUDIO_TEMP_PATH, default=DEFAULT_AUDIO_TEMP_PATH): str,
