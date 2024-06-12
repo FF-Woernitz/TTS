@@ -56,7 +56,6 @@ parser.add_argument(f"--{CONF_MQTT_BASE_TOPIC.replace('_', '-')}", help="MQTT ba
 parser.add_argument(f"--no-{CONF_MQTT_HEARTBEAT.replace('_', '-')}", help="Disable heartbeat", action="store_false")
 parser.add_argument(f"--{CONF_MQTT_TLS.replace('_', '-')}", help="MQTT enable tls", action="store_true")
 parser.add_argument(f"--{CONF_AUDIO_DISABLE.replace('_', '-')}", help="Disable audio playback", action="store_true")
-parser.add_argument(f"--{CONF_AUDIO_PLUGIN.replace('_', '-')}", help="Audio plugin", type=str)
 parser.add_argument(f"--{CONF_AUDIO_DEVICE.replace('_', '-')}", help="Audio device", type=str)
 parser.add_argument(f"--{CONF_AUDIO_KEEP_FILE.replace('_', '-')}", help="Do not delete audio file", action="store_true")
 parser.add_argument(f"--{CONF_TTS_LANG.replace('_', '-')}", help="TTS Language")

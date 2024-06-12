@@ -149,11 +149,6 @@ def tts_worker(filename, text):
 def audio_worker():
     config = Config()
 
-    if config[CONF_AUDIO_PLUGIN] is not None:
-        os.environ["AUDIODRIVER"] = config[CONF_AUDIO_PLUGIN]
-    if config[CONF_AUDIO_DEVICE] is not None:
-        os.environ["AUDIODEV"] = config[CONF_AUDIO_DEVICE]
-
     while not stopProgram.is_set():
         try:
             data = audioQueue.get_nowait()
@@ -187,9 +182,9 @@ def audio_worker():
 
                 logger.info(f"Playing {os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav')}")
                 if not config[CONF_AUDIO_DISABLE]:
-                    args = ['/usr/bin/play', '-q', os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav')]
+                    args = ['/usr/bin/paplay', '-p', '-d', config[CONF_AUDIO_DEVICE], os.path.abspath(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav'))]
                     p = Popen(args)
-                    while p.poll():
+                    while p.poll() is None:
                         if stopProgram.is_set() or stopCurrent.is_set():
                             p.terminate()
                             continue
