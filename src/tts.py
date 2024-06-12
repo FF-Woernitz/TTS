@@ -10,6 +10,8 @@ import queue
 import uuid
 from json import JSONDecodeError
 from os.path import isfile
+from subprocess import Popen
+
 
 import paho.mqtt.client as mqtt
 from gtts import gTTS
@@ -134,7 +136,7 @@ def tts_worker(filename, text):
     tts.save(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.mp3'))
 
     sound = AudioSegment.from_mp3(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.mp3'))
-    sound = sound.set_frame_rate(44100)
+    sound = sound.set_frame_rate(48000)
     sound.export(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav'), format="wav")
 
     if not config[CONF_AUDIO_KEEP_FILE]:
@@ -146,10 +148,6 @@ def tts_worker(filename, text):
 
 def audio_worker():
     config = Config()
-    if not config[CONF_AUDIO_DISABLE]:
-        import simpleaudio as sa
-    else:
-        logger.warning("Audio playback disabled!")
 
     while not stopProgram.is_set():
         try:
@@ -184,11 +182,11 @@ def audio_worker():
 
                 logger.info(f"Playing {os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav')}")
                 if not config[CONF_AUDIO_DISABLE]:
-                    wave_obj = sa.WaveObject.from_wave_file(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav'))
-                    play_obj = wave_obj.play()
-                    while play_obj.is_playing():
+                    args = ['/usr/bin/paplay', '-p', '-d', config[CONF_AUDIO_DEVICE], os.path.abspath(os.path.join(config[CONF_AUDIO_TEMP_PATH], f'{filename}.wav'))]
+                    p = Popen(args)
+                    while p.poll() is None:
                         if stopProgram.is_set() or stopCurrent.is_set():
-                            play_obj.stop()
+                            p.terminate()
                             continue
                         time.sleep(0.1)
                 else:
@@ -258,9 +256,6 @@ def main(args):
             logging.ERROR, "{}{}".format(RED_COLOR, logging.getLevelName(logging.ERROR))
         )
     logger.setLevel(ALL_SUPPORTED_LOG_LEVELS[config[CONF_LOG_LEVEL]])
-
-    if config[CONF_AUDIO_DEVICE] is not None:
-        os.environ["ALSA_CARD"] = config[CONF_AUDIO_DEVICE]
 
     mqttc = create_mqtt_client()
 
